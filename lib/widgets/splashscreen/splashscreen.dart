@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:finet/widgets/image.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,7 +36,11 @@ class _SplashScreenState extends State<SplashScreen>
       body: Center(
         child: FadeTransition(
           opacity: _fadeAnimation,
-          child: ImageWidget(assetPath: 'assets/logo.png', size: 180),
+          child: Image(
+            image: AssetImage('assets/img/logo.png'),
+            width: 180, // Set the width
+            height: 180,
+          ),
         ),
       ),
     );

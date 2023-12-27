@@ -1,4 +1,5 @@
 import 'package:finet/widgets/pages/login.dart';
+import 'package:finet/widgets/pages/register.dart';
 import 'package:finet/widgets/splashscreen/introduction.dart';
 import 'package:flutter/material.dart';
 import 'package:finet/widgets/splashscreen/splashscreen.dart';
@@ -20,9 +21,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => SplashScreen(),
           '/introduction': (context) => Introduction(),
-          '/login': (context) => LoginForm(
-              usernameController: usernameController,
-              passwordController: passwordController),
+          '/login': (context) => const LoginForm(),
+          '/register': (context) => const RegisterForm(),
         });
   }
 }

@@ -1,182 +1,192 @@
-import 'package:finet/widgets/image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
+
   @override
-  final TextEditingController usernameController;
-  final TextEditingController passwordController;
-  final FocusNode usernameFocus = FocusNode();
-  final FocusNode passwordFocus = FocusNode();
+  LoginFormState createState() {
+    return LoginFormState();
+  }
+}
 
-  LoginForm({
-    Key? loginForm,
-    required this.usernameController,
-    required this.passwordController,
-  }) : super(key: loginForm) {}
+class LoginFormState extends State<LoginForm> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(40.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 100),
-            const Image(
-              image: AssetImage('assets/wallet.png'),
-              width: 40,
-              fit: BoxFit.scaleDown,
-            ),
-            // const SizedBox(height: 10),
-            const Text(
-              'Login',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Gabarito',
-                letterSpacing: 1.0,
-              ),
-            ),
-            // const SizedBox(height: 10),
-            TextButton(
-              onPressed: () {
-                // Navigate to the '/register' route
-                Navigator.pushNamed(context, '/register');
-              },
-              child: const Text(
-                'New? Sign up here.',
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            // const SizedBox(height: 40),
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Username',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontFamily: 'Gabarito',
-                  letterSpacing: 1.0,
-                  color: Colors.green[600],
-                ),
-              ),
-            ),
-            // const SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(
-                  color: const Color.fromARGB(255, 223, 223, 223),
-                  width: 1.0,
-                ),
-              ),
-              child: TextFormField(
-                controller: usernameController,
-                decoration: const InputDecoration(
-                  hintText: 'janedoe',
-                  hintStyle: TextStyle(
-                      fontSize: 14, color: Colors.grey, fontFamily: 'Gabarito'),
-                  border: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.green, width: 1.0),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
+                  child: Image(
+                    image: AssetImage('assets/img/wallet.png'),
+                    width: 40,
+                    height: 40,
                   ),
                 ),
               ),
-            ),
-            // const SizedBox(height: 20),
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Password',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontFamily: GoogleFonts.dmSans().fontFamily,
-                  letterSpacing: 1.0,
-                  color: Colors.green[600],
+              Center(
+                  child: Padding(
+                padding: const EdgeInsets.only(right: 20, left: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 120),
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                          fontFamily: 'DMSans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 38.0,
+                          color: Colors.black),
+                    ),
+                    SizedBox(height: 12),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/register');
+                      },
+                      child: Text(
+                        'New? Register here.',
+                        style: TextStyle(
+                          fontFamily: 'DMSans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
+                          color: Color.fromARGB(255, 74, 108, 255),
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Email',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: 'DMSans',
+                              letterSpacing: 1.0,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF438BEF),
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                          TextFormField(
+                            controller: _emailController,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 12.0),
+                                hintText: 'janedoe@gmail.com',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'DMSans',
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16.0,
+                                  color:
+                                      Colors.grey, // Customize the text color
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide(
+                                    color: Color(0xFF438BEF),
+                                    width: 1.0,
+                                  ),
+                                )),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 24),
+                          Text(
+                            'Password',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: 'DMSans',
+                              letterSpacing: 1.0,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF438BEF),
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                          TextFormField(
+                            obscureText: true,
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 12.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide(
+                                    color: Color(0xFF438BEF),
+                                    width: 1.0,
+                                  ),
+                                )),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 24),
+                          DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                border: const Border(
+                                  top: BorderSide(
+                                      color: Color(0xFF438BEF), width: 2),
+                                  left: BorderSide(
+                                      color: Color(0xFF438BEF), width: 2),
+                                  right: BorderSide(
+                                      color: Color(0xFF438BEF), width: 2),
+                                  bottom: BorderSide(
+                                      color: Color(0xFF438BEF), width: 6),
+                                ),
+                              ),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.transparent,
+                                    foregroundColor: Colors.transparent,
+                                    shadowColor: Colors.transparent,
+                                    elevation: 0,
+                                  ),
+                                  onPressed: () {
+                                    print("Sign up");
+                                  },
+                                  child: const Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 10.0),
+                                    child: Text(
+                                      "Login",
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'DMSans',
+                                        color: Color(0xFF438BEF),
+                                      ),
+                                    ),
+                                  )))
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            // const SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(
-                  color: const Color.fromARGB(255, 223, 223, 223),
-                  width: 1.0,
-                ),
-              ),
-              child: TextFormField(
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  hintText: 'Character must be between 6-8 characters',
-                  hintStyle: TextStyle(
-                      fontSize: 14, color: Colors.grey, fontFamily: 'Gabarito'),
-                  border: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.green, width: 1.0),
-                  ),
-                ),
-                obscureText: true,
-              ),
-            ),
-            // const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green[600], // Background color
-                foregroundColor: Colors.white, // Text color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0), // Rounded border
-                  side: const BorderSide(color: Colors.blue), // Border color
-                ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontFamily: 'Gabarito',
-                    letterSpacing: 1.0,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ));
+              )),
+            ],
+          ),
+        ));
   }
-}
-
-class FadePageRouteBuilder<T> extends PageRouteBuilder<T> {
-  final WidgetBuilder builder;
-
-  FadePageRouteBuilder({required this.builder})
-      : super(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              builder(context),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOut;
-
-            var tween =
-                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
-
-            return SlideTransition(position: offsetAnimation, child: child);
-          },
-        );
 }
