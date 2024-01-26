@@ -1,4 +1,10 @@
+import 'package:finet/user_auth/firebase_auth_services.dart';
+import 'package:finet/user_auth/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -10,9 +16,18 @@ class LoginForm extends StatefulWidget {
 }
 
 class LoginFormState extends State<LoginForm> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +106,7 @@ class LoginFormState extends State<LoginForm> {
                                   fontFamily: 'DMSans',
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16.0,
-                                  color:
-                                      Colors.grey, // Customize the text color
+                                  color: Colors.grey,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
@@ -164,7 +178,9 @@ class LoginFormState extends State<LoginForm> {
                                     elevation: 0,
                                   ),
                                   onPressed: () {
-                                    print("Sign up");
+                                    if (_formKey.currentState!.validate()) {
+                                      _login(context);
+                                    }
                                   },
                                   child: const Padding(
                                     padding: EdgeInsets.symmetric(
@@ -188,5 +204,22 @@ class LoginFormState extends State<LoginForm> {
             ],
           ),
         ));
+  }
+
+  void _login(BuildContext context) async {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    User? user =
+        await _auth.signInWithEmailAndPassword(context, email, password);
+
+    if (user != null) {
+      print("User successfully logged in");
+      Provider.of<UserProvider>(context, listen: false)
+          .setUserEmail(user.email);
+      Navigator.pushNamed(context, '/home');
+    } else {
+      print("Error in creating user");
+    }
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "754197928310",
+    "project_id": "finet-e3fa2",
+    "storage_bucket": "finet-e3fa2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754197928310:android:ef59d89ba75518ab0b0257",
+        "android_client_info": {
+          "package_name": "com.example.finet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFy8pTqInIv_vgaYYFWxcsu3c8oMdjdmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

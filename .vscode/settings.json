@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/Chelsea Ng/finet/linux"
+    "cmake.sourceDirectory": "C:/Users/Chelsea Ng/finet/linux",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

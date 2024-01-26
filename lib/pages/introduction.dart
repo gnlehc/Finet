@@ -143,7 +143,7 @@ class _IntroductionState extends State<Introduction> {
                             elevation: 0,
                           ),
                           onPressed: () {
-                            print("Sign up");
+                            Navigator.pushNamed(context, '/register');
                           },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(
