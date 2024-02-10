@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:finet/user_auth/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -43,7 +48,7 @@ class RegisterFormState extends State<RegisterForm> {
               ),
               Center(
                   child: Padding(
-                padding: const EdgeInsets.only(right: 20, left: 20),
+                padding: const EdgeInsets.only(right: 40, left: 40),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +72,7 @@ class RegisterFormState extends State<RegisterForm> {
                         style: TextStyle(
                           fontFamily: 'DMSans',
                           fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
+                          fontSize: 14.0,
                           color: Color.fromARGB(255, 74, 108, 255),
                           decoration: TextDecoration.underline,
                         ),
@@ -202,14 +207,54 @@ class RegisterFormState extends State<RegisterForm> {
   void _signUp() async {
     String email = _emailController.text;
     String password = _passwordController.text;
+    // final Logger logger;
+    // final String url = 'https://10.0.2.2:5000/api/register';
+    // final Map<String, String> headers = {
+    //   'Content-Type': 'application/json',
+    // };
+    // final Map<String, dynamic> data = {
+    //   'email': email,
+    //   'password': password,
+    // };
+
+    // try {
+    //   final http.Response response = await http.post(
+    //     Uri.parse(url),
+    //     headers: headers,
+    //     body: jsonEncode(data),
+    //   );
+
+    //   if (response.statusCode == 200) {
+    //     print('Response: ${response.body}');
+    //   } else {
+    //     print('Error: ${response.statusCode}');
+    //   }
+    // } catch (error) {
+    //   print('Error: $error');
+    // }
 
     User? user = await _auth.signUpWithEmailAndPassword(email, password);
-
     if (user != null) {
       print("User successfully created");
+      await _addUserDataToRealTimeDB(user.uid, email);
       Navigator.pushNamed(context, '/login');
     } else {
       print("Error in creating user");
+    }
+  }
+
+  Future<void> _addUserDataToRealTimeDB(String uid, String email) async {
+    try {
+      final DatabaseReference usersRef =
+          FirebaseDatabase.instance.ref().child('Users');
+      await usersRef.child(uid).set({
+        'uid': uid,
+        'email': email,
+      });
+
+      print("User data added to Firebase Realtime Database");
+    } catch (e) {
+      print("Error adding user data to Firebase Realtime Database: $e");
     }
   }
 }

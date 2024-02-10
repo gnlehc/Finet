@@ -1,6 +1,8 @@
+import 'package:finet/middleware/auth_middleware.dart';
 import 'package:finet/pages/home.dart';
 import 'package:finet/user_auth/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:finet/pages/login.dart';
 import 'package:finet/pages/register.dart';
@@ -28,15 +30,38 @@ Future main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        initialRoute: '/',
-        debugShowCheckedModeBanner: false,
-        routes: {
-          '/': (context) => SplashScreen(),
-          '/introduction': (context) => Introduction(),
-          '/login': (context) => const LoginForm(),
-          '/register': (context) => const RegisterForm(),
-          '/home': (context) => Home()
-        });
+    return GetMaterialApp(
+      initialRoute: '/',
+      home: SplashScreen(),
+      getPages: [
+        GetPage(
+          name: '/home',
+          page: () => Home(),
+        ),
+        GetPage(
+          name: '/login',
+          page: () => const LoginForm(),
+          middlewares: [AuthMiddleware()],
+        ),
+        GetPage(
+          name: '/register',
+          page: () => const RegisterForm(),
+          middlewares: [AuthMiddleware()],
+        ),
+        GetPage(
+          name: '/introduction',
+          page: () => Introduction(),
+          middlewares: [AuthMiddleware()]
+        )
+      ],
+      debugShowCheckedModeBanner: false,
+      // routes: {
+      //   '/': (context) => SplashScreen(),
+      //   '/introduction': (context) => Introduction(),
+      //   '/login': (context) => const LoginForm(),
+      //   '/register': (context) => const RegisterForm(),
+      //   '/home': (context) => Home()
+      // });
+    );
   }
 }

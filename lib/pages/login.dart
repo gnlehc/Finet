@@ -1,8 +1,9 @@
+import 'package:finet/model/quickaddtrans.dart';
 import 'package:finet/user_auth/firebase_auth_services.dart';
 import 'package:finet/user_auth/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:async';
+
 
 import 'package:provider/provider.dart';
 
@@ -222,4 +223,5 @@ class LoginFormState extends State<LoginForm> {
       print("Error in creating user");
     }
   }
+
 }
