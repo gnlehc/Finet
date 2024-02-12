@@ -5,14 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState(){
+    return HomeState();
+  } 
 }
 
-class _HomeState extends State<Home> {
+class HomeState extends State<Home> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
-  final ProfilePicture picture = ProfilePicture(name: 'Chelsea' , radius: 32, fontsize: 21)
+  final ProfilePicture picture = const ProfilePicture(name: 'Chelsea' , radius: 32, fontsize: 21);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +32,7 @@ class _HomeState extends State<Home> {
                       children: [
                         Row(
                           children: [
-                            Column(
+                            const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -55,14 +60,14 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> addTransaction() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
 
     final String description = descriptionController.text;
     final double price = double.parse(priceController.text);
     final DateTime time = DateTime.now();
 
-    if (description.isNotEmpty && price != null) {
-      final User? user = _auth.currentUser;
+    if (description.isNotEmpty) {
+      final User? user = auth.currentUser;
 
       if (user != null) {
         final String userId = user.uid;

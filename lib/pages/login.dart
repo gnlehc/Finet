@@ -1,4 +1,3 @@
-import 'package:finet/model/quickaddtrans.dart';
 import 'package:finet/user_auth/firebase_auth_services.dart';
 import 'package:finet/user_auth/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -37,10 +36,10 @@ class LoginFormState extends State<LoginForm> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
+                  padding: EdgeInsets.only(top: 40, right: 20, left: 20),
                   child: Image(
                     image: AssetImage('assets/img/wallet.png'),
                     width: 40,
@@ -55,8 +54,8 @@ class LoginFormState extends State<LoginForm> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 120),
-                    Text(
+                    const SizedBox(height: 120),
+                    const Text(
                       'Login',
                       style: TextStyle(
                           fontFamily: 'DMSans',
@@ -64,12 +63,12 @@ class LoginFormState extends State<LoginForm> {
                           fontSize: 38.0,
                           color: Colors.black),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, '/register');
                       },
-                      child: Text(
+                      child: const Text(
                         'New? Register here.',
                         style: TextStyle(
                           fontFamily: 'DMSans',
@@ -86,7 +85,7 @@ class LoginFormState extends State<LoginForm> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Email',
                             style: TextStyle(
                               fontSize: 16.0,
@@ -96,14 +95,14 @@ class LoginFormState extends State<LoginForm> {
                               color: Color(0xFF438BEF),
                             ),
                           ),
-                          SizedBox(height: 12),
+                          const SizedBox(height: 12),
                           TextFormField(
                             controller: _emailController,
                             decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 15.0, vertical: 12.0),
                                 hintText: 'janedoe@gmail.com',
-                                hintStyle: TextStyle(
+                                hintStyle: const TextStyle(
                                   fontFamily: 'DMSans',
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16.0,
@@ -111,7 +110,7 @@ class LoginFormState extends State<LoginForm> {
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0xFF438BEF),
                                     width: 1.0,
                                   ),
@@ -123,8 +122,8 @@ class LoginFormState extends State<LoginForm> {
                               return null;
                             },
                           ),
-                          SizedBox(height: 24),
-                          Text(
+                          const SizedBox(height: 24),
+                          const Text(
                             'Password',
                             style: TextStyle(
                               fontSize: 16.0,
