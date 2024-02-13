@@ -1,3 +1,4 @@
+import 'package:finet/firebase_options.dart';
 import 'package:finet/middleware/auth_middleware.dart';
 import 'package:finet/pages/home.dart';
 import 'package:finet/user_auth/user_provider.dart';
@@ -12,13 +13,7 @@ import 'package:finet/pages/splashscreen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: FirebaseOptions(
-    apiKey: "AIzaSyCmqiFH0vsuTfLs-fwbDVoDZL4kpAarsdg",
-    appId: "1:754197928310:web:bd8025ed5fd1b7ac0b0257",
-    messagingSenderId: "754197928310",
-    projectId: "finet-e3fa2",
-  ));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
@@ -28,6 +23,7 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -36,7 +32,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: '/home',
-          page: () => Home(),
+          page: () => const Home(),
         ),
         GetPage(
           name: '/login',
@@ -49,10 +45,9 @@ class MyApp extends StatelessWidget {
           middlewares: [AuthMiddleware()],
         ),
         GetPage(
-          name: '/introduction',
-          page: () => Introduction(),
-          middlewares: [AuthMiddleware()]
-        )
+            name: '/introduction',
+            page: () => Introduction(),
+            middlewares: [AuthMiddleware()])
       ],
       debugShowCheckedModeBanner: false,
       // routes: {

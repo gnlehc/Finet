@@ -1,11 +1,9 @@
-import 'dart:convert';
 
 import 'package:finet/user_auth/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
+
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
