@@ -3,7 +3,6 @@ import 'package:finet/user_auth/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
@@ -27,8 +26,6 @@ class LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,31 +33,20 @@ class LoginFormState extends State<LoginForm> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 40, right: 20, left: 20),
-                  child: Image(
-                    image: AssetImage('assets/img/wallet.png'),
-                    width: 40,
-                    height: 40,
-                  ),
-                ),
-              ),
               Center(
                   child: Padding(
-                padding: const EdgeInsets.only(right: 20, left: 20),
+                padding: const EdgeInsets.only(right: 40, left: 40),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 120),
+                    const SizedBox(height: 40),
                     const Text(
                       'Login',
                       style: TextStyle(
                           fontFamily: 'DMSans',
                           fontWeight: FontWeight.w600,
-                          fontSize: 38.0,
+                          fontSize: 28.0,
                           color: Colors.black),
                     ),
                     const SizedBox(height: 12),
@@ -73,7 +59,7 @@ class LoginFormState extends State<LoginForm> {
                         style: TextStyle(
                           fontFamily: 'DMSans',
                           fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
+                          fontSize: 14.0,
                           color: Color.fromARGB(255, 74, 108, 255),
                           decoration: TextDecoration.underline,
                         ),
@@ -88,7 +74,7 @@ class LoginFormState extends State<LoginForm> {
                           const Text(
                             'Email',
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: 14.0,
                               fontFamily: 'DMSans',
                               letterSpacing: 1.0,
                               fontWeight: FontWeight.w500,
@@ -100,12 +86,12 @@ class LoginFormState extends State<LoginForm> {
                             controller: _emailController,
                             decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0, vertical: 12.0),
+                                    horizontal: 12.0, vertical: 12.0),
                                 hintText: 'janedoe@gmail.com',
                                 hintStyle: const TextStyle(
                                   fontFamily: 'DMSans',
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
+                                  fontSize: 12.0,
                                   color: Colors.grey,
                                 ),
                                 border: OutlineInputBorder(
@@ -122,11 +108,11 @@ class LoginFormState extends State<LoginForm> {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 18),
                           const Text(
                             'Password',
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: 14.0,
                               fontFamily: 'DMSans',
                               letterSpacing: 1.0,
                               fontWeight: FontWeight.w500,
@@ -139,7 +125,7 @@ class LoginFormState extends State<LoginForm> {
                             controller: _passwordController,
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 15.0, vertical: 12.0),
+                                    horizontal: 12.0, vertical: 12.0),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                   borderSide: BorderSide(
@@ -155,46 +141,48 @@ class LoginFormState extends State<LoginForm> {
                             },
                           ),
                           SizedBox(height: 24),
-                          DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                border: const Border(
-                                  top: BorderSide(
-                                      color: Color(0xFF438BEF), width: 2),
-                                  left: BorderSide(
-                                      color: Color(0xFF438BEF), width: 2),
-                                  right: BorderSide(
-                                      color: Color(0xFF438BEF), width: 2),
-                                  bottom: BorderSide(
-                                      color: Color(0xFF438BEF), width: 6),
-                                ),
-                              ),
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.transparent,
-                                    foregroundColor: Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                    elevation: 0,
-                                  ),
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      _login(context);
-                                    }
-                                  },
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 10.0, horizontal: 10.0),
-                                    child: Text(
-                                      "Login",
-                                      style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'DMSans',
-                                        color: Color(0xFF438BEF),
-                                      ),
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: const Border(
+                                      top: BorderSide(
+                                          color: Color(0xFF476FF1), width: 2),
+                                      left: BorderSide(
+                                          color: Color(0xFF476FF1), width: 2),
+                                      right: BorderSide(
+                                          color: Color(0xFF476FF1), width: 2),
+                                      bottom: BorderSide(
+                                          color: Color(0xFF476FF1), width: 6),
                                     ),
-                                  )))
+                                  ),
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.transparent,
+                                        foregroundColor: Colors.transparent,
+                                        shadowColor: Colors.transparent,
+                                        elevation: 0,
+                                      ),
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          _login(context);
+                                        }
+                                      },
+                                      child: const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10.0, horizontal: 10.0),
+                                        child: Text(
+                                          "Login",
+                                          style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'DMSans',
+                                            color: Color(0xFF438BEF),
+                                          ),
+                                        ),
+                                      )))),
                         ],
                       ),
                     ),
@@ -222,5 +210,4 @@ class LoginFormState extends State<LoginForm> {
       print("Error in creating user");
     }
   }
-
 }
