@@ -1,5 +1,5 @@
-import 'package:finet/widgets/registerForm.dart';
-import 'package:finet/widgets/finetbackground.dart';
+import 'package:finet/views/widgets/auth/register_form.dart';
+import 'package:finet/views/widgets/auth/finetbackground.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatelessWidget {

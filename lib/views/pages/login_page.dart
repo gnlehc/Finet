@@ -1,6 +1,6 @@
-import 'package:finet/widgets/loginForm.dart';
+import 'package:finet/views/widgets/auth/login_form.dart';
 import 'package:flutter/material.dart';
-import 'package:finet/widgets/finetbackground.dart';
+import 'package:finet/views/widgets/auth/finetbackground.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

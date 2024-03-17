@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:finet/user_auth/firebase_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:logger/logger.dart';
@@ -21,7 +22,7 @@ class RegisterFormState extends State<RegisterForm> {
   final FirebaseAuthService _auth = FirebaseAuthService();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -31,7 +32,7 @@ class RegisterFormState extends State<RegisterForm> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _nameController.dispose();
+    _usernameController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
   }
@@ -132,7 +133,7 @@ class RegisterFormState extends State<RegisterForm> {
                           ),
                           SizedBox(height: 12),
                           TextFormField(
-                            controller: _nameController,
+                            controller: _usernameController,
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 12.0, vertical: 12.0),
@@ -322,57 +323,61 @@ class RegisterFormState extends State<RegisterForm> {
         ));
   }
 
-  void _signUp() async {
+  Future _signUp() async{
+    String username = _usernameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
-    // final Logger logger;
-    // final String url = 'https://10.0.2.2:7002/api/register';
-    // final Map<String, String> headers = {
-    //   'Content-Type': 'application/json',
-    // };
-    // final Map<String, dynamic> data = {
-    //   'email': email,
-    //   'password': password,
-    // };
-
-    // try {
-    //   final http.Response response = await http.post(
-    //     Uri.parse(url),
-    //     headers: headers,
-    //     body: jsonEncode(data),
-    //   );
-
-    //   if (response.statusCode == 200) {
-    //     print('Response: ${response.body}');
-    //   } else {
-    //     print('Error: ${response.statusCode}');
-    //   }
-    // } catch (error) {
-    //   print('Error: $error');
-    // }
-
-    User? user = await _auth.signUpWithEmailAndPassword(email, password);
-    if (user != null) {
-      print("User successfully created");
-      await _addUserDataToRealTimeDB(user.uid, email);
-      Navigator.pushNamed(context, '/login');
-    } else {
-      print("Error in creating user");
-    }
-  }
-
-  Future<void> _addUserDataToRealTimeDB(String uid, String email) async {
+    const String url = 'https://10.0.2.2:7002/api/register';
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+    };
+    final Map<String, dynamic> data = {
+      'username': username,
+      'email': email,
+      'password': password,
+    };
     try {
-      final DatabaseReference usersRef =
-          FirebaseDatabase.instance.ref().child('Users');
-      await usersRef.child(uid).set({
-        'uid': uid,
-        'email': email,
-      });
-
-      print("User data added to Firebase Realtime Database");
-    } catch (e) {
-      print("Error adding user data to Firebase Realtime Database: $e");
+      final http.Response response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: jsonEncode(data),
+      );
+      if (response.statusCode == 200) {
+        // ignore: use_build_context_synchronously
+        Navigator.pushNamed(context, '/login');
+      } else {
+        if (kDebugMode) {
+          print('Error: ${response.statusCode}');
+        }
+      }
+    } catch (error) {
+      if (kDebugMode) {
+         print('Error: $error');
+        }
     }
+
+    // User? user = await _auth.signUpWithEmailAndPassword(email, password);
+    // if (user != null) {
+    //   print("User successfully created");
+    //   await _addUserDataToRealTimeDB(user.uid, email);
+    //   Navigator.pushNamed(context, '/login');
+    // } else {
+    //   print("Error in creating user");
+    // }
   }
+
+  // Future<void> _addUserDataToRealTimeDB(String uid, String email) async {
+  //   try {
+  //     final DatabaseReference usersRef =
+  //         FirebaseDatabase.instance.ref().child('Users');
+  //     await usersRef.child(uid).set({
+  //       'uid': uid,
+  //       'email': email,
+  //     });
+
+  //     print("User data added to Firebase Realtime Database");
+  //   } catch (e) {
+  //     print("Error adding user data to Firebase Realtime Database: $e");
+  //   }
+  // }
 }
