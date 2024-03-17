@@ -1,23 +1,27 @@
+import 'dart:io';
+
 import 'package:finet/firebase_options.dart';
-import 'package:finet/middleware/auth_middleware.dart';
-import 'package:finet/pages/home.dart';
+import 'package:finet/views/pages/expenses/add_expenses_page.dart';
+import 'package:finet/views/pages/home_page.dart';
+import 'package:finet/views/pages/login_page.dart';
+import 'package:finet/views/pages/register_page.dart';
 import 'package:finet/user_auth/user_provider.dart';
+import 'package:finet/views/pages/splashscreen_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:finet/pages/login.dart';
-import 'package:finet/pages/register.dart';
-import 'package:finet/pages/introduction.dart';
+import 'package:finet/views/pages/introduction_page.dart';
 import 'package:flutter/material.dart';
-import 'package:finet/pages/splashscreen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  HttpOverrides.global = MyHttpOverrides();
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -27,36 +31,44 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme: ThemeData(
+        fontFamily: 'DMSans',
+        textTheme: const TextTheme(),
+      ),
       initialRoute: '/',
-      home: SplashScreen(),
+      home: const HomePage(),
       getPages: [
         GetPage(
           name: '/home',
-          page: () => const Home(),
+          page: () => const HomePage(),
         ),
         GetPage(
           name: '/login',
-          page: () => const LoginForm(),
-          middlewares: [AuthMiddleware()],
+          page: () => const LoginPage(),
+          // middlewares: [AuthMiddleware()],
         ),
         GetPage(
           name: '/register',
-          page: () => const RegisterForm(),
-          middlewares: [AuthMiddleware()],
+          page: () => const RegisterPage(),
+          // middlewares: [AuthMiddleware()],
         ),
         GetPage(
-            name: '/introduction',
-            page: () => Introduction(),
-            middlewares: [AuthMiddleware()])
+          name: '/introduction',
+          page: () => IntroductionPage(),
+          // middlewares: [AuthMiddleware()]
+        ),
+        GetPage(name: '/add-expenses', page: () => const AddExpensesPage()),
       ],
       debugShowCheckedModeBanner: false,
-      // routes: {
-      //   '/': (context) => SplashScreen(),
-      //   '/introduction': (context) => Introduction(),
-      //   '/login': (context) => const LoginForm(),
-      //   '/register': (context) => const RegisterForm(),
-      //   '/home': (context) => Home()
-      // });
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
